@@ -1,31 +1,40 @@
-.DS_Store
-.atom/
-.idea/
-.vscode/*
-!.vscode/tasks.json
-!.vscode/settings.json
-
-.packages
-.pub/
+# Flutter/Dart
 .dart_tool/
-pubspec.lock
-pubspec_overrides.yaml
-flutter_export_environment.sh
-
-*.iml
-
 .flutter-plugins
 .flutter-plugins-dependencies
-
-.project
-.classpath
-.settings
-.last_build_id
-
-
-# Misc
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.packages
+.pub-cache/
+.pub/
 build/
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.lock
+*.g.dart
+*.freezed.dart
+
+# Android
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# Windows
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+
+# Melos
+.melos_tool/
+pubspec_overrides.yaml
+
+# Environment files
+.env
+.env.*
+
+# Coverage
+coverage/

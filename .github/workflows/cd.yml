@@ -1,0 +1,62 @@
+name: CD
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    
+    - name: Install Melos
+      run: dart pub global activate melos
+    
+    - name: Get Dependencies
+      run: melos bootstrap
+    
+    - name: Build Windows
+      run: flutter build windows
+      working-directory: apps/desktop
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          apps/desktop/build/windows/runner/Release/*
+        draft: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-android:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    
+    - name: Install Melos
+      run: dart pub global activate melos
+    
+    - name: Get Dependencies
+      run: melos bootstrap
+    
+    - name: Build Android
+      run: flutter build apk --release
+      working-directory: apps/mobile
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
