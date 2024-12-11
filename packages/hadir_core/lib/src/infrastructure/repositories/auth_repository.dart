@@ -1,8 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hadir_core/src/domain/entities/user.dart';
-import 'package:hadir_core/src/domain/repositories/auth_repository.dart';
-import 'package:hadir_core/src/domain/value_objects/email_address.dart';
-import 'package:hadir_core/src/domain/value_objects/user_type.dart';
+import 'package:hadir_core/src/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AuthRepository implements IAuthRepository {
@@ -20,7 +17,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, User>> getCurrentUser() async {
+  Future<Either<AppFailure, User>> getCurrentUser() async {
     try {
       final user = _client.auth.currentUser;
       if (user == null) {
@@ -33,7 +30,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, User>> registerWithEmailAndPassword({
+  Future<Either<AppFailure, User>> registerWithEmailAndPassword({
     required EmailAddress email,
     required String password,
     required String fullName,
@@ -67,7 +64,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, User>> signIn({
+  Future<Either<AppFailure, User>> signIn({
     required EmailAddress email,
     required String password,
   }) async {
@@ -90,7 +87,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> signOut() async {
+  Future<Either<AppFailure, Unit>> signOut() async {
     try {
       await _client.auth.signOut();
       return right(unit);

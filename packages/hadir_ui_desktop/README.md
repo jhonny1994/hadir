@@ -1,39 +1,64 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Hadir UI Desktop
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Desktop UI package for Hadir attendance management system, built with Flutter and Fluent UI.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+### Theme System
 
-## Getting started
+- Fluent UI theme integration
+- Light and dark mode support
+- Consistent color scheme
+- Typography system
+- Spacing constants
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Components
+
+#### Navigation
+
+- Navigation pane with items
+- Route management
+- Nested navigation support
+
+#### Buttons
+
+- Primary button with loading state
+- Icon support
+- Proper sizing and spacing
+
+#### Inputs
+
+- Text input with error handling
+- Search box with clear functionality
+- Form styling
+
+#### Cards
+
+- Info card for statistics
+- Schedule card for class listings
+- Quick actions card for dashboard
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
-```
+import 'package:hadir_ui_desktop/hadir_ui_desktop.dart';
 
-## Additional information
+// Use theme
+FluentThemeData theme = HadirTheme.light();
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+// Use components
+PrimaryButton(
+  text: 'Click me',
+  onPressed: () {},
+);
+
+TextInput(
+  label: 'Email',
+  placeholder: 'Enter your email',
+);
+
+InfoCard(
+  title: 'Active Courses',
+  value: '5',
+  icon: FluentIcons.book_contacts,
+);

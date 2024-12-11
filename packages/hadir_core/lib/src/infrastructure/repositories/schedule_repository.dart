@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hadir_core/src/domain/entities/schedule.dart';
-import 'package:hadir_core/src/domain/repositories/schedule_repository.dart';
+import 'package:hadir_core/src/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class ScheduleRepository implements IScheduleRepository {
@@ -9,7 +8,7 @@ class ScheduleRepository implements IScheduleRepository {
   final sp.SupabaseClient _client;
 
   @override
-  Future<Either<ScheduleFailure, Schedule>> createSchedule(
+  Future<Either<AppFailure, Schedule>> createSchedule(
     Schedule schedule,
   ) async {
     try {
@@ -29,7 +28,7 @@ class ScheduleRepository implements IScheduleRepository {
   }
 
   @override
-  Future<Either<ScheduleFailure, Unit>> deleteSchedule(
+  Future<Either<AppFailure, Unit>> deleteSchedule(
     String scheduleId,
   ) async {
     try {
@@ -46,7 +45,7 @@ class ScheduleRepository implements IScheduleRepository {
   }
 
   @override
-  Future<Either<ScheduleFailure, List<Schedule>>> getCourseSchedules(
+  Future<Either<AppFailure, List<Schedule>>> getCourseSchedules(
     String courseId,
   ) async {
     try {
@@ -60,7 +59,7 @@ class ScheduleRepository implements IScheduleRepository {
   }
 
   @override
-  Future<Either<ScheduleFailure, Unit>> updateSchedule(
+  Future<Either<AppFailure, Unit>> updateSchedule(
     Schedule schedule,
   ) async {
     try {

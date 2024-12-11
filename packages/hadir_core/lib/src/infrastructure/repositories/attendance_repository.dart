@@ -1,7 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hadir_core/src/domain/entities/attendance_record.dart';
-import 'package:hadir_core/src/domain/entities/attendance_session.dart';
-import 'package:hadir_core/src/domain/repositories/attendance_repository.dart';
+import 'package:hadir_core/src/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AttendanceRepository extends IAttendanceRepository {
@@ -9,7 +7,7 @@ class AttendanceRepository extends IAttendanceRepository {
 
   final sp.SupabaseClient _client;
   @override
-  Future<Either<AttendanceFailure, AttendanceSession>> createSession({
+  Future<Either<AppFailure, AttendanceSession>> createSession({
     required String courseId,
     required String scheduleId,
   }) async {
@@ -34,7 +32,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, String>> generateBackupCode(
+  Future<Either<AppFailure, String>> generateBackupCode(
     String sessionId,
   ) async {
     try {
@@ -50,7 +48,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, List<AttendanceSession>>>
+  Future<Either<AppFailure, List<AttendanceSession>>>
       getCourseAttendanceSessions(String courseId) async {
     try {
       final response = await _client
@@ -67,7 +65,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, AttendanceStats>> getCourseAttendanceStats(
+  Future<Either<AppFailure, AttendanceStats>> getCourseAttendanceStats(
     String courseId,
   ) async {
     try {
@@ -91,7 +89,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, List<AttendanceRecord>>> getSessionRecords(
+  Future<Either<AppFailure, List<AttendanceRecord>>> getSessionRecords(
     String sessionId,
   ) async {
     try {
@@ -109,8 +107,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, List<AttendanceRecord>>>
-      getStudentAttendance({
+  Future<Either<AppFailure, List<AttendanceRecord>>> getStudentAttendance({
     required String courseId,
     required String studentId,
   }) async {
@@ -130,7 +127,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, Unit>> markAttendance({
+  Future<Either<AppFailure, Unit>> markAttendance({
     required String sessionId,
     required String studentId,
     required String qrCode,
@@ -168,7 +165,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, Unit>> reviewExcuse({
+  Future<Either<AppFailure, Unit>> reviewExcuse({
     required String recordId,
     required bool isApproved,
   }) async {
@@ -185,7 +182,7 @@ class AttendanceRepository extends IAttendanceRepository {
   }
 
   @override
-  Future<Either<AttendanceFailure, Unit>> submitExcuse({
+  Future<Either<AppFailure, Unit>> submitExcuse({
     required String recordId,
     required String note,
   }) async {

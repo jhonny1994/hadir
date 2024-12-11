@@ -1,31 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hadir_core/src/domain/entities/attendance_record.dart';
-import 'package:hadir_core/src/domain/entities/attendance_session.dart';
-
-abstract class AttendanceFailure {
-  const AttendanceFailure();
-  String get message;
-}
-
-class ServerError extends AttendanceFailure {
-  @override
-  String get message => 'Server error occurred';
-}
-
-class SessionExpired extends AttendanceFailure {
-  @override
-  String get message => 'Attendance session has expired';
-}
-
-class InvalidQRCode extends AttendanceFailure {
-  @override
-  String get message => 'Invalid QR code';
-}
-
-class AlreadyMarked extends AttendanceFailure {
-  @override
-  String get message => 'Attendance already marked';
-}
+import 'package:hadir_core/src/domain/domain.dart';
 
 class AttendanceStats {
   const AttendanceStats({
@@ -43,47 +17,46 @@ class AttendanceStats {
 }
 
 abstract class IAttendanceRepository {
-  Future<Either<AttendanceFailure, AttendanceSession>> createSession({
+  Future<Either<AppFailure, AttendanceSession>> createSession({
     required String courseId,
     required String scheduleId,
   });
 
-  Future<Either<AttendanceFailure, Unit>> markAttendance({
+  Future<Either<AppFailure, Unit>> markAttendance({
     required String sessionId,
     required String studentId,
     required String qrCode,
   });
 
-  Future<Either<AttendanceFailure, List<AttendanceRecord>>> getSessionRecords(
+  Future<Either<AppFailure, List<AttendanceRecord>>> getSessionRecords(
     String sessionId,
   );
 
-  Future<Either<AttendanceFailure, List<AttendanceRecord>>>
-      getStudentAttendance({
+  Future<Either<AppFailure, List<AttendanceRecord>>> getStudentAttendance({
     required String courseId,
     required String studentId,
   });
 
-  Future<Either<AttendanceFailure, List<AttendanceSession>>>
+  Future<Either<AppFailure, List<AttendanceSession>>>
       getCourseAttendanceSessions(
     String courseId,
   );
 
-  Future<Either<AttendanceFailure, AttendanceStats>> getCourseAttendanceStats(
+  Future<Either<AppFailure, AttendanceStats>> getCourseAttendanceStats(
     String courseId,
   );
 
-  Future<Either<AttendanceFailure, Unit>> submitExcuse({
+  Future<Either<AppFailure, Unit>> submitExcuse({
     required String recordId,
     required String note,
   });
 
-  Future<Either<AttendanceFailure, Unit>> reviewExcuse({
+  Future<Either<AppFailure, Unit>> reviewExcuse({
     required String recordId,
     required bool isApproved,
   });
 
-  Future<Either<AttendanceFailure, String>> generateBackupCode(
+  Future<Either<AppFailure, String>> generateBackupCode(
     String sessionId,
   );
 }

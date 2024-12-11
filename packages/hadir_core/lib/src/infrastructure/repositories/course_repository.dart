@@ -1,9 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hadir_core/src/domain/entities/course.dart';
-import 'package:hadir_core/src/domain/entities/schedule.dart';
-import 'package:hadir_core/src/domain/entities/user.dart';
-import 'package:hadir_core/src/domain/repositories/course_repository.dart';
-import 'package:hadir_core/src/domain/value_objects/course_code.dart';
+import 'package:hadir_core/src/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class CourseRepository extends ICourseRepository {
@@ -12,7 +8,7 @@ class CourseRepository extends ICourseRepository {
   final sp.SupabaseClient _client;
 
   @override
-  Future<Either<CourseFailure, Course>> createCourse({
+  Future<Either<AppFailure, Course>> createCourse({
     required String name,
     required String professorId,
   }) async {
@@ -38,7 +34,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, Unit>> deleteCourse(String courseId) async {
+  Future<Either<AppFailure, Unit>> deleteCourse(String courseId) async {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) return left(InsufficientPermission());
@@ -60,7 +56,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, Unit>> enrollStudent({
+  Future<Either<AppFailure, Unit>> enrollStudent({
     required String courseId,
     required String studentId,
   }) async {
@@ -82,7 +78,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, List<Schedule>>> getCourseSchedules(
+  Future<Either<AppFailure, List<Schedule>>> getCourseSchedules(
     String courseId,
   ) async {
     try {
@@ -98,7 +94,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, List<User>>> getEnrolledStudents(
+  Future<Either<AppFailure, List<User>>> getEnrolledStudents(
     String courseId,
   ) async {
     try {
@@ -122,7 +118,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, List<Course>>> getProfessorCourses() async {
+  Future<Either<AppFailure, List<Course>>> getProfessorCourses() async {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) return left(InsufficientPermission());
@@ -137,7 +133,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, List<Course>>> getStudentCourses() async {
+  Future<Either<AppFailure, List<Course>>> getStudentCourses() async {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null) return left(InsufficientPermission());
@@ -161,7 +157,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, Course>> joinCourse({
+  Future<Either<AppFailure, Course>> joinCourse({
     required CourseCode joinCode,
     required String studentId,
   }) async {
@@ -197,7 +193,7 @@ class CourseRepository extends ICourseRepository {
   }
 
   @override
-  Future<Either<CourseFailure, Unit>> updateCourse(Course course) async {
+  Future<Either<AppFailure, Unit>> updateCourse(Course course) async {
     try {
       final userId = _client.auth.currentUser?.id;
       if (userId == null || userId != course.professorId) {
